@@ -10,3 +10,7 @@ C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Application\obj
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Application\obj\Debug\net8.0\refint\Bestivale.Application.dll
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Application\obj\Debug\net8.0\Bestivale.Application.pdb
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Application\obj\Debug\net8.0\ref\Bestivale.Application.dll
+C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Application\bin\Debug\net8.0\Bestivale.Domain.dll
+C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Application\bin\Debug\net8.0\Bestivale.Domain.pdb
+C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Application\obj\Debug\net8.0\Bestivale.Application.csproj.AssemblyReference.cache
+C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Application\obj\Debug\net8.0\Bestival.28E65086.Up2Date

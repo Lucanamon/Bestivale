@@ -1,6 +1,7 @@
 using Bestivale.Application.Interfaces;
+using Bestivale.Application.Services;
 using Bestivale.Infrastructure.Data;
-using Bestivale.Infrastructure.Services;
+using Bestivale.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -21,11 +22,27 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // Database
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 builder.Services.AddDbContext<BestivaleDbContext>(options =>
-    options.UseInMemoryDatabase("Bestivale"));
+{
+    if (string.IsNullOrWhiteSpace(connectionString))
+    {
+        // Development: in-memory database
+        options.UseInMemoryDatabase("Bestivale");
+    }
+    else
+    {
+        // Production-ready: PostgreSQL
+        options.UseNpgsql(connectionString);
+    }
+});
 
 // Services
+builder.Services.AddScoped<IMonsterRepository, MonsterRepository>();
 builder.Services.AddScoped<IMonsterService, MonsterService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, AuthService>();
 
 var app = builder.Build();
 
@@ -44,4 +61,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

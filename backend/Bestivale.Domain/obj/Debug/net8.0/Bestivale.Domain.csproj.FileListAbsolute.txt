@@ -1,15 +1,11 @@
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\bin\Debug\net8.0\Bestivale.Domain.deps.json
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\bin\Debug\net8.0\Bestivale.Domain.dll
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\bin\Debug\net8.0\Bestivale.Domain.pdb
-C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\bin\Debug\net8.0\Bestivale.Application.dll
-C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\bin\Debug\net8.0\Bestivale.Application.pdb
-C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.csproj.AssemblyReference.cache
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.AssemblyInfoInputs.cache
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.AssemblyInfo.cs
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.csproj.CoreCompileInputs.cache
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.sourcelink.json
-C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestival.8E0C78F4.Up2Date
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.dll
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\refint\Bestivale.Domain.dll
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.pdb

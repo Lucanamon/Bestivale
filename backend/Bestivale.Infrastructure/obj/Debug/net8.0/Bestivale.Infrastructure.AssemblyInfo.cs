@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bestivale.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1255e58d9e1ae35bd5241448378aaa94dc7c151c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2c18df33a12fd3544dfd8734deef0a56d671486")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bestivale.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bestivale.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

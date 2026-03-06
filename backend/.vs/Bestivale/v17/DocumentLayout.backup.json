@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1AD16442-F838-4C20-9585-2E881BA33F76}|Bestivale.API\\Bestivale.API.csproj|c:\\users\\user\\documents\\repositories\\bestivale\\backend\\bestivale.api\\bestivale.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{1AD16442-F838-4C20-9585-2E881BA33F76}|Bestivale.API\\Bestivale.API.csproj|solutionrelative:bestivale.api\\bestivale.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{4610D3E6-40B6-4A1D-9382-4027543BF64A}|Bestivale.Infrastructure\\Bestivale.Infrastructure.csproj|c:\\users\\user\\documents\\repositories\\bestivale\\backend\\bestivale.infrastructure\\data\\bestivaledbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4610D3E6-40B6-4A1D-9382-4027543BF64A}|Bestivale.Infrastructure\\Bestivale.Infrastructure.csproj|solutionrelative:bestivale.infrastructure\\data\\bestivaledbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1AD16442-F838-4C20-9585-2E881BA33F76}|Bestivale.API\\Bestivale.API.csproj|c:\\users\\user\\documents\\repositories\\bestivale\\backend\\bestivale.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1AD16442-F838-4C20-9585-2E881BA33F76}|Bestivale.API\\Bestivale.API.csproj|solutionrelative:bestivale.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1AD16442-F838-4C20-9585-2E881BA33F76}|Bestivale.API\\Bestivale.API.csproj|c:\\users\\user\\documents\\repositories\\bestivale\\backend\\bestivale.api\\bestivale.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1AD16442-F838-4C20-9585-2E881BA33F76}|Bestivale.API\\Bestivale.API.csproj|solutionrelative:bestivale.api\\bestivale.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1AD16442-F838-4C20-9585-2E881BA33F76}|Bestivale.API\\Bestivale.API.csproj|c:\\users\\user\\documents\\repositories\\bestivale\\backend\\bestivale.api\\bestivale.api.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
@@ -47,12 +51,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "BestivaleDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.Infrastructure\\Data\\BestivaleDbContext.cs",
+              "RelativeDocumentMoniker": "Bestivale.Infrastructure\\Data\\BestivaleDbContext.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.Infrastructure\\Data\\BestivaleDbContext.cs",
+              "RelativeToolTip": "Bestivale.Infrastructure\\Data\\BestivaleDbContext.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAIAwwCYAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T10:35:37.118Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Bestivale.API.csproj",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.API\\Bestivale.API.csproj",
               "RelativeDocumentMoniker": "Bestivale.API\\Bestivale.API.csproj",
               "ToolTip": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.API\\Bestivale.API.csproj",
               "RelativeToolTip": "Bestivale.API\\Bestivale.API.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-03-06T09:06:44.838Z",
               "EditorCaption": ""
@@ -65,14 +82,14 @@
               "RelativeDocumentMoniker": "Bestivale.API\\Program.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.API\\Program.cs",
               "RelativeToolTip": "Bestivale.API\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAAA8AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-06T09:06:21.076Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Bestivale.API.http",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.API\\Bestivale.API.http",
               "RelativeDocumentMoniker": "Bestivale.API\\Bestivale.API.http",
@@ -85,7 +102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Bestivale.Infrastructure.csproj",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.Infrastructure\\Bestivale.Infrastructure.csproj",
               "RelativeDocumentMoniker": "Bestivale.Infrastructure\\Bestivale.Infrastructure.csproj",

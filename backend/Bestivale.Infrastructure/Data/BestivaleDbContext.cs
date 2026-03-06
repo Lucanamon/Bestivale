@@ -5,11 +5,14 @@ namespace Bestivale.Infrastructure.Data;
 
 public sealed class BestivaleDbContext : DbContext
 {
+    private static readonly Guid RootAdminId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+
     public BestivaleDbContext(DbContextOptions<BestivaleDbContext> options) : base(options)
     {
     }
 
     public DbSet<Monster> Monsters => Set<Monster>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,6 +26,35 @@ public sealed class BestivaleDbContext : DbContext
             entity.Property(m => m.Mythology).IsRequired().HasMaxLength(200);
             entity.Property(m => m.Description).IsRequired().HasMaxLength(4000);
             entity.Property(m => m.ImageUrl).IsRequired().HasMaxLength(1000);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(u => u.Id);
+
+            entity.Property(u => u.Username).IsRequired().HasMaxLength(200);
+            entity.Property(u => u.PasswordHash).IsRequired();
+            entity.Property(u => u.Role).IsRequired().HasMaxLength(50).HasDefaultValue("User");
+            entity.Property(u => u.CurrencyBalance).IsRequired().HasDefaultValue(10);
+            entity.Property(u => u.CreatedAt).IsRequired();
+            entity.Property(u => u.IsRootAdmin).IsRequired().HasDefaultValue(false);
+
+            entity.HasIndex(u => u.Username).IsUnique();
+
+            // RootAdmin seed user
+            var rootAdmin = new User
+            {
+                Id = RootAdminId,
+                Username = "madmin",
+                Role = "RootAdmin",
+                CurrencyBalance = 9999,
+                CreatedAt = DateTime.UtcNow,
+                IsRootAdmin = true
+            };
+
+            rootAdmin.PasswordHash = BCrypt.Net.BCrypt.HashPassword("guardianOP");
+
+            entity.HasData(rootAdmin);
         });
     }
 }
