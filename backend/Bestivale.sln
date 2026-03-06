@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestivale.API", "Bestivale.API\Bestivale.API.csproj", "{1AD16442-F838-4C20-9585-2E881BA33F76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestivale.Domain", "Bestivale.Domain\Bestivale.Domain.csproj", "{731EE544-463B-459D-9BC9-A7B63F3CF268}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestivale.Application", "Bestivale.Application\Bestivale.Application.csproj", "{411A07BB-8A7E-492B-B662-0A0FD6F33D0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bestivale.Infrastructure", "Bestivale.Infrastructure\Bestivale.Infrastructure.csproj", "{4610D3E6-40B6-4A1D-9382-4027543BF64A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AD16442-F838-4C20-9585-2E881BA33F76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AD16442-F838-4C20-9585-2E881BA33F76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AD16442-F838-4C20-9585-2E881BA33F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AD16442-F838-4C20-9585-2E881BA33F76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{731EE544-463B-459D-9BC9-A7B63F3CF268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{731EE544-463B-459D-9BC9-A7B63F3CF268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{731EE544-463B-459D-9BC9-A7B63F3CF268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{731EE544-463B-459D-9BC9-A7B63F3CF268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{411A07BB-8A7E-492B-B662-0A0FD6F33D0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{411A07BB-8A7E-492B-B662-0A0FD6F33D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{411A07BB-8A7E-492B-B662-0A0FD6F33D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{411A07BB-8A7E-492B-B662-0A0FD6F33D0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4610D3E6-40B6-4A1D-9382-4027543BF64A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4610D3E6-40B6-4A1D-9382-4027543BF64A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4610D3E6-40B6-4A1D-9382-4027543BF64A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4610D3E6-40B6-4A1D-9382-4027543BF64A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE6A6326-8979-4E0A-846F-8C34DF362B1E}
+	EndGlobalSection
+EndGlobal
