@@ -66,8 +66,17 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, AuthService>();
 builder.Services.AddScoped<IMarketRepository, MarketRepository>();
 builder.Services.AddScoped<IMarketService, MarketService>();
+builder.Services.AddScoped<IEggRepository, EggRepository>();
+builder.Services.AddScoped<EggService>();
 
 var app = builder.Build();
+
+// Ensure each user has at least 5 eggs on startup
+using (var scope = app.Services.CreateScope())
+{
+    var eggService = scope.ServiceProvider.GetRequiredService<EggService>();
+    await eggService.EnsureAtLeastEggsForAllUsersAsync(5);
+}
 
 // Configure the HTTP request pipeline
 app.UseSwagger();

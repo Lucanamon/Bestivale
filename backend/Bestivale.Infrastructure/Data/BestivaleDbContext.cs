@@ -14,6 +14,7 @@ public sealed class BestivaleDbContext : DbContext
     public DbSet<Monster> Monsters => Set<Monster>();
     public DbSet<User> Users => Set<User>();
     public DbSet<MarketListing> MarketListings => Set<MarketListing>();
+    public DbSet<Egg> Eggs => Set<Egg>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -79,6 +80,23 @@ public sealed class BestivaleDbContext : DbContext
             entity.HasIndex(l => l.Status);
             entity.HasIndex(l => l.CreatedAt);
             entity.HasIndex(l => new { l.Status, l.Price });
+        });
+
+        modelBuilder.Entity<Egg>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.TemplateCode).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.ColorHex).IsRequired().HasMaxLength(16);
+            entity.Property(e => e.ColorDescription).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.CreatedAt).IsRequired();
+
+            entity.HasOne(e => e.OwnerUser)
+                .WithMany()
+                .HasForeignKey(e => e.OwnerUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(e => e.OwnerUserId);
         });
     }
 }
