@@ -10,6 +10,27 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services.AddControllers();
 
+// CORS (dev): allow Angular dev server
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("DevCors", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:4200",
+                "https://localhost:4200",
+                "http://localhost:4201",
+                "https://localhost:4201",
+                "http://localhost:4301",
+                "https://localhost:4301",
+                "http://localhost:4401",
+                "https://localhost:4401"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -43,6 +64,8 @@ builder.Services.AddScoped<IMonsterRepository, MonsterRepository>();
 builder.Services.AddScoped<IMonsterService, MonsterService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, AuthService>();
+builder.Services.AddScoped<IMarketRepository, MarketRepository>();
+builder.Services.AddScoped<IMarketService, MarketService>();
 
 var app = builder.Build();
 
@@ -56,6 +79,8 @@ app.UseSwaggerUI(options =>
 });
 
 app.UseHttpsRedirection();
+
+app.UseCors("DevCors");
 
 app.UseAuthorization();
 

@@ -13,6 +13,7 @@ public sealed class BestivaleDbContext : DbContext
 
     public DbSet<Monster> Monsters => Set<Monster>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<MarketListing> MarketListings => Set<MarketListing>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,7 +46,7 @@ public sealed class BestivaleDbContext : DbContext
             var rootAdmin = new User
             {
                 Id = RootAdminId,
-                Username = "madmin",
+                Username = "rootadmin",
                 Role = "RootAdmin",
                 CurrencyBalance = 9999,
                 CreatedAt = DateTime.UtcNow,
@@ -55,6 +56,29 @@ public sealed class BestivaleDbContext : DbContext
             rootAdmin.PasswordHash = BCrypt.Net.BCrypt.HashPassword("guardianOP");
 
             entity.HasData(rootAdmin);
+        });
+
+        modelBuilder.Entity<MarketListing>(entity =>
+        {
+            entity.HasKey(l => l.Id);
+
+            entity.Property(l => l.Price).IsRequired();
+            entity.Property(l => l.Status).IsRequired().HasMaxLength(20).HasDefaultValue("Active");
+            entity.Property(l => l.CreatedAt).IsRequired();
+
+            entity.HasOne(l => l.Monster)
+                .WithMany()
+                .HasForeignKey(l => l.MonsterId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(l => l.SellerUser)
+                .WithMany()
+                .HasForeignKey(l => l.SellerUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasIndex(l => l.Status);
+            entity.HasIndex(l => l.CreatedAt);
+            entity.HasIndex(l => new { l.Status, l.Price });
         });
     }
 }

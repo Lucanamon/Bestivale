@@ -70,7 +70,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\USER\\.nuget\\packages\\": {}
+    "C:\\Users\\USER\\AppData\\Local\\Temp\\cursor-sandbox-cache\\b4ca8438c93c6aedeb1e57cbe3fad981\\nuget": {}
   },
   "project": {
     "version": "1.0.0",
@@ -78,7 +78,7 @@
       "projectUniqueName": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.Application\\Bestivale.Application.csproj",
       "projectName": "Bestivale.Application",
       "projectPath": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.Application\\Bestivale.Application.csproj",
-      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\USER\\AppData\\Local\\Temp\\cursor-sandbox-cache\\b4ca8438c93c6aedeb1e57cbe3fad981\\nuget",
       "outputPath": "C:\\Users\\USER\\Documents\\Repositories\\Bestivale\\backend\\Bestivale.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [

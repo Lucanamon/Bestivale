@@ -22,6 +22,52 @@ namespace Bestivale.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Bestivale.Domain.Entities.MarketListing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("BuyerUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("MonsterId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("SellerUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("SoldAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasDefaultValue("Active");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("MonsterId");
+
+                    b.HasIndex("SellerUserId");
+
+                    b.HasIndex("Status");
+
+                    b.HasIndex("Status", "Price");
+
+                    b.ToTable("MarketListings");
+                });
+
             modelBuilder.Entity("Bestivale.Domain.Entities.Monster", b =>
                 {
                     b.Property<Guid>("Id")
@@ -99,13 +145,32 @@ namespace Bestivale.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedAt = new DateTime(2026, 3, 6, 11, 17, 54, 99, DateTimeKind.Utc).AddTicks(4231),
+                            CreatedAt = new DateTime(2026, 3, 12, 8, 18, 49, 458, DateTimeKind.Utc).AddTicks(1755),
                             CurrencyBalance = 9999,
                             IsRootAdmin = true,
-                            PasswordHash = "$2a$11$gVAcwO2YT04otBIssZhiZeAyw7LyMjdzkBAAnrLDpqUTS0kJFadjS",
+                            PasswordHash = "$2a$11$m3S3oC8rnurPWE89LOWW1.8obFTCpJ7BvBy4LEJ41d.TzSvfZQRzW",
                             Role = "RootAdmin",
-                            Username = "madmin"
+                            Username = "rootadmin"
                         });
+                });
+
+            modelBuilder.Entity("Bestivale.Domain.Entities.MarketListing", b =>
+                {
+                    b.HasOne("Bestivale.Domain.Entities.Monster", "Monster")
+                        .WithMany()
+                        .HasForeignKey("MonsterId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Bestivale.Domain.Entities.User", "SellerUser")
+                        .WithMany()
+                        .HasForeignKey("SellerUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Monster");
+
+                    b.Navigation("SellerUser");
                 });
 #pragma warning restore 612, 618
         }
