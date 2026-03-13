@@ -14,5 +14,7 @@ public sealed class Egg
     public string ColorDescription { get; set; } = string.Empty;
 
     public DateTime CreatedAt { get; set; }
+
+    public bool IsListed { get; set; }
 }
 

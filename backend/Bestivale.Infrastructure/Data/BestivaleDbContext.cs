@@ -67,6 +67,8 @@ public sealed class BestivaleDbContext : DbContext
             entity.Property(l => l.Status).IsRequired().HasMaxLength(20).HasDefaultValue("Active");
             entity.Property(l => l.CreatedAt).IsRequired();
 
+            entity.Property(l => l.EggId);
+
             entity.HasOne(l => l.Monster)
                 .WithMany()
                 .HasForeignKey(l => l.MonsterId)
@@ -76,6 +78,11 @@ public sealed class BestivaleDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(l => l.SellerUserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(l => l.Egg)
+                .WithMany()
+                .HasForeignKey(l => l.EggId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasIndex(l => l.Status);
             entity.HasIndex(l => l.CreatedAt);
@@ -90,6 +97,7 @@ public sealed class BestivaleDbContext : DbContext
             entity.Property(e => e.ColorHex).IsRequired().HasMaxLength(16);
             entity.Property(e => e.ColorDescription).IsRequired().HasMaxLength(200);
             entity.Property(e => e.CreatedAt).IsRequired();
+            entity.Property(e => e.IsListed).IsRequired().HasDefaultValue(false);
 
             entity.HasOne(e => e.OwnerUser)
                 .WithMany()

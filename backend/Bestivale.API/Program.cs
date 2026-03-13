@@ -71,9 +71,27 @@ builder.Services.AddScoped<EggService>();
 
 var app = builder.Build();
 
-// Ensure each user has at least 5 eggs on startup
+// Ensure base content & starter inventory on startup
 using (var scope = app.Services.CreateScope())
 {
+    var db = scope.ServiceProvider.GetRequiredService<BestivaleDbContext>();
+    await db.Database.MigrateAsync();
+
+    // Register the Egg as a "Monster" so it can be listed on the Market
+    var eggMonsterExists = await db.Monsters.AnyAsync(m => m.Name == "Embryo mutagen egg");
+    if (!eggMonsterExists)
+    {
+        db.Monsters.Add(new Bestivale.Domain.Entities.Monster
+        {
+            Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+            Name = "Embryo mutagen egg",
+            Mythology = "Egg",
+            Description = "A humming egg infused with embryo mutagen. Its shell holds an unknown future.",
+            ImageUrl = "https://placehold.co/600x400/png?text=Egg"
+        });
+        await db.SaveChangesAsync();
+    }
+
     var eggService = scope.ServiceProvider.GetRequiredService<EggService>();
     await eggService.EnsureAtLeastEggsForAllUsersAsync(5);
 }

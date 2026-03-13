@@ -33,5 +33,16 @@ public sealed class EggRepository : IEggRepository
         _db.Eggs.AddRange(eggs);
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<Egg?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await _db.Eggs.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+    }
+
+    public async Task UpdateAsync(Egg egg, CancellationToken cancellationToken = default)
+    {
+        _db.Eggs.Update(egg);
+        await _db.SaveChangesAsync(cancellationToken);
+    }
 }
 

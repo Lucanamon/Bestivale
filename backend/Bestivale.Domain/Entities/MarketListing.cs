@@ -8,6 +8,11 @@ public sealed class MarketListing
 
     public Monster? Monster { get; set; }
 
+    // When selling a specific egg instance, link to it here.
+    public Guid? EggId { get; set; }
+
+    public Egg? Egg { get; set; }
+
     public Guid SellerUserId { get; set; }
 
     public User? SellerUser { get; set; }

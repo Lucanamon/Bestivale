@@ -26,6 +26,52 @@ public sealed class MarketController : ControllerBase
         return Ok(listings);
     }
 
+    [HttpPost("eggs/list")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<MarketListingDto>> CreateEggListing([FromBody] CreateEggListingRequest request, CancellationToken cancellationToken)
+    {
+        var acting = GetActingUsername();
+        if (string.IsNullOrWhiteSpace(acting))
+        {
+            return Unauthorized("Missing X-Username header.");
+        }
+
+        try
+        {
+            var listing = await _marketService.CreateEggListingAsync(acting, request, cancellationToken);
+            return CreatedAtAction(nameof(GetActiveListings), new { id = listing.Id }, listing);
+        }
+        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("list")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<MarketListingDto>> CreateInventoryListing([FromBody] CreateInventoryListingRequest request, CancellationToken cancellationToken)
+    {
+        var acting = GetActingUsername();
+        if (string.IsNullOrWhiteSpace(acting))
+        {
+            return Unauthorized("Missing X-Username header.");
+        }
+
+        try
+        {
+            var listing = await _marketService.CreateInventoryListingAsync(acting, request, cancellationToken);
+            return CreatedAtAction(nameof(GetActiveListings), new { id = listing.Id }, listing);
+        }
+        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpPost("listings")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -64,6 +110,60 @@ public sealed class MarketController : ControllerBase
         try
         {
             var success = await _marketService.BuyListingAsync(acting, request, cancellationToken);
+            if (!success)
+            {
+                return BadRequest("Listing not found or not active.");
+            }
+            return NoContent();
+        }
+        catch (Exception ex) when (ex is InvalidOperationException)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPost("cancel")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Cancel([FromBody] Guid listingId, CancellationToken cancellationToken)
+    {
+        var acting = GetActingUsername();
+        if (string.IsNullOrWhiteSpace(acting))
+        {
+            return Unauthorized("Missing X-Username header.");
+        }
+
+        try
+        {
+            var success = await _marketService.CancelListingAsync(acting, listingId, cancellationToken);
+            if (!success)
+            {
+                return BadRequest("Listing not found or not active.");
+            }
+            return NoContent();
+        }
+        catch (Exception ex) when (ex is InvalidOperationException)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var acting = GetActingUsername();
+        if (string.IsNullOrWhiteSpace(acting))
+        {
+            return Unauthorized("Missing X-Username header.");
+        }
+
+        try
+        {
+            var success = await _marketService.CancelListingAsync(acting, id, cancellationToken);
             if (!success)
             {
                 return BadRequest("Listing not found or not active.");

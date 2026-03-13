@@ -3,6 +3,7 @@ using System;
 using Bestivale.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Bestivale.Infrastructure.Migrations
 {
     [DbContext(typeof(BestivaleDbContext))]
-    partial class BestivaleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260313072309_AddEggLinkToMarketListings")]
+    partial class AddEggLinkToMarketListings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,11 +43,6 @@ namespace Bestivale.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsListed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false);
 
                     b.Property<Guid>("OwnerUserId")
                         .HasColumnType("uuid");
@@ -189,10 +187,10 @@ namespace Bestivale.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedAt = new DateTime(2026, 3, 13, 9, 10, 57, 605, DateTimeKind.Utc).AddTicks(3398),
+                            CreatedAt = new DateTime(2026, 3, 13, 7, 23, 8, 514, DateTimeKind.Utc).AddTicks(8190),
                             CurrencyBalance = 9999,
                             IsRootAdmin = true,
-                            PasswordHash = "$2a$11$1CIs07VXvy8MkD.I7IZ0yeyXvbQb/..JiSmo5oxBUM1Xs3kMVW/kG",
+                            PasswordHash = "$2a$11$CsGtdsMT00mGXlJbqXATCejPOxLpCssvosuPhQ864t9STzQhRso9e",
                             Role = "RootAdmin",
                             Username = "rootadmin"
                         });

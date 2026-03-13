@@ -8,12 +8,14 @@ public sealed class EggService
 {
     private readonly IEggRepository _eggRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IMarketRepository _marketRepository;
     private readonly Random _rng = new();
 
-    public EggService(IEggRepository eggRepository, IUserRepository userRepository)
+    public EggService(IEggRepository eggRepository, IUserRepository userRepository, IMarketRepository marketRepository)
     {
         _eggRepository = eggRepository;
         _userRepository = userRepository;
+        _marketRepository = marketRepository;
     }
 
     public async Task EnsureAtLeastEggsForAllUsersAsync(int minEggs, CancellationToken cancellationToken = default)
@@ -43,6 +45,7 @@ public sealed class EggService
 
         var eggs = await _eggRepository.GetByOwnerAsync(user.Id, cancellationToken);
         return eggs
+            .Where(e => !e.IsListed)
             .Select(e => new EggDto
             {
                 Id = e.Id,
@@ -52,6 +55,32 @@ public sealed class EggService
                 CreatedAt = e.CreatedAt
             })
             .ToList();
+    }
+
+    public async Task<EggDto> GrantRandomEggForUserAsync(string username, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(username))
+        {
+            throw new ArgumentException("Username is required.", nameof(username));
+        }
+
+        var user = await _userRepository.GetByUsernameAsync(username.Trim(), cancellationToken);
+        if (user is null)
+        {
+            throw new InvalidOperationException("User does not exist.");
+        }
+
+        var egg = CreateRandomEgg(user.Id);
+        await _eggRepository.AddRangeAsync(new[] { egg }, cancellationToken);
+
+        return new EggDto
+        {
+            Id = egg.Id,
+            TemplateCode = egg.TemplateCode,
+            ColorHex = egg.ColorHex,
+            ColorDescription = egg.ColorDescription,
+            CreatedAt = egg.CreatedAt
+        };
     }
 
     private Egg CreateRandomEgg(Guid ownerUserId)

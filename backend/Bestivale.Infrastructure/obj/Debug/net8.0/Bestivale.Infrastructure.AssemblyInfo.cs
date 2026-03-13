@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bestivale.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9eadeaf24fea8f8796b07b71427c0ed3f77d2d1a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4194a1a7a3949fb78b4e330065f6cca4cc092e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bestivale.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bestivale.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
