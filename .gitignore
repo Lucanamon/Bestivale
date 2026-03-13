@@ -1,0 +1,72 @@
+#############################
+# Global
+#############################
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Environment / secrets
+*.user
+*.userprefs
+*.env
+*.env.*
+
+#############################
+# .NET / Visual Studio
+#############################
+
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+[Rr]elease/
+[Dd]ebug/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# VS
+.vs/
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+**/packages/*
+!**/packages/build/
+!**/packages/repositories.config
+
+#############################
+# Node / Angular / Nx
+#############################
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+
+dist/
+dist-ssr/
+coverage/
+.angular/
+.nx/
+
+# IDE
+.vscode/
+.history/
+
