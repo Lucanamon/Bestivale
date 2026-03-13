@@ -42,21 +42,13 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Database
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// Database: always use PostgreSQL (dev & prod)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                      ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 
 builder.Services.AddDbContext<BestivaleDbContext>(options =>
 {
-    if (string.IsNullOrWhiteSpace(connectionString))
-    {
-        // Development: in-memory database
-        options.UseInMemoryDatabase("Bestivale");
-    }
-    else
-    {
-        // Production-ready: PostgreSQL
-        options.UseNpgsql(connectionString);
-    }
+    options.UseNpgsql(connectionString);
 });
 
 // Services
@@ -76,6 +68,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<BestivaleDbContext>();
     await db.Database.MigrateAsync();
+    Console.WriteLine("Migrate database successfully.");
 
     // Register the Egg as a "Monster" so it can be listed on the Market
     var eggMonsterExists = await db.Monsters.AnyAsync(m => m.Name == "Embryo mutagen egg");
