@@ -52,7 +52,8 @@ public sealed class EggService
                 TemplateCode = e.TemplateCode,
                 ColorHex = e.ColorHex,
                 ColorDescription = e.ColorDescription,
-                CreatedAt = e.CreatedAt
+                CreatedAt = e.CreatedAt,
+                IsFavorite = e.IsFavorite
             })
             .ToList();
     }
@@ -79,7 +80,8 @@ public sealed class EggService
             TemplateCode = egg.TemplateCode,
             ColorHex = egg.ColorHex,
             ColorDescription = egg.ColorDescription,
-            CreatedAt = egg.CreatedAt
+            CreatedAt = egg.CreatedAt,
+            IsFavorite = egg.IsFavorite
         };
     }
 

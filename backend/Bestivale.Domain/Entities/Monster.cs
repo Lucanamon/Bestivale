@@ -11,5 +11,7 @@ public sealed class Monster
     public string Description { get; set; } = string.Empty;
 
     public string ImageUrl { get; set; } = string.Empty;
+
+    public bool IsFavorite { get; set; } = false;
 }
 

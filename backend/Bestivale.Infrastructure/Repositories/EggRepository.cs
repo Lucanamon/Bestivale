@@ -23,6 +23,15 @@ public sealed class EggRepository : IEggRepository
             .ToListAsync(cancellationToken);
     }
 
+    public async Task<IReadOnlyList<Egg>> GetFavoritesByOwnerAsync(Guid ownerUserId, CancellationToken cancellationToken = default)
+    {
+        return await _db.Eggs
+            .AsNoTracking()
+            .Where(e => e.OwnerUserId == ownerUserId && e.IsFavorite)
+            .OrderBy(e => e.CreatedAt)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<int> CountByOwnerAsync(Guid ownerUserId, CancellationToken cancellationToken = default)
     {
         return await _db.Eggs.CountAsync(e => e.OwnerUserId == ownerUserId, cancellationToken);

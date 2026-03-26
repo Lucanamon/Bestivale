@@ -7,5 +7,6 @@ public sealed class EggDto
     public string ColorHex { get; init; } = string.Empty;
     public string ColorDescription { get; init; } = string.Empty;
     public DateTime CreatedAt { get; init; }
+    public bool IsFavorite { get; init; }
 }
 

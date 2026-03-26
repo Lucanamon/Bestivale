@@ -16,5 +16,7 @@ public sealed class Egg
     public DateTime CreatedAt { get; set; }
 
     public bool IsListed { get; set; }
+
+    public bool IsFavorite { get; set; } = false;
 }
 

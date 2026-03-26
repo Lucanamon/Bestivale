@@ -19,6 +19,16 @@ public sealed class MonsterRepository : IMonsterRepository
         return await _db.Monsters
             .AsNoTracking()
             .ToListAsync(cancellationToken);
+    } 
+    public async Task<Monster?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+    return await _db.Monsters.FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
+    }
+
+    public async Task UpdateAsync(Monster monster, CancellationToken cancellationToken = default)
+    {
+        _db.Monsters.Update(monster);
+        await _db.SaveChangesAsync(cancellationToken);
     }
 }
 

@@ -60,6 +60,7 @@ builder.Services.AddScoped<IMarketRepository, MarketRepository>();
 builder.Services.AddScoped<IMarketService, MarketService>();
 builder.Services.AddScoped<IEggRepository, EggRepository>();
 builder.Services.AddScoped<EggService>();
+builder.Services.AddScoped<InventoryService>();
 
 var app = builder.Build();
 
@@ -98,7 +99,11 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = "swagger";
 });
 
-app.UseHttpsRedirection();
+// In local dev we often run HTTP-only profiles; avoid noisy redirect warnings.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseCors("DevCors");
 

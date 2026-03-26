@@ -28,6 +28,7 @@ public sealed class BestivaleDbContext : DbContext
             entity.Property(m => m.Mythology).IsRequired().HasMaxLength(200);
             entity.Property(m => m.Description).IsRequired().HasMaxLength(4000);
             entity.Property(m => m.ImageUrl).IsRequired().HasMaxLength(1000);
+            entity.Property(m => m.IsFavorite).IsRequired().HasDefaultValue(false);
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -98,6 +99,7 @@ public sealed class BestivaleDbContext : DbContext
             entity.Property(e => e.ColorDescription).IsRequired().HasMaxLength(200);
             entity.Property(e => e.CreatedAt).IsRequired();
             entity.Property(e => e.IsListed).IsRequired().HasDefaultValue(false);
+            entity.Property(e => e.IsFavorite).IsRequired().HasDefaultValue(false);
 
             entity.HasOne(e => e.OwnerUser)
                 .WithMany()
