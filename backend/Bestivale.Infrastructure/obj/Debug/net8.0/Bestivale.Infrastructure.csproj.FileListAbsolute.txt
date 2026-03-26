@@ -16,3 +16,6 @@ C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Infrastructure\
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Infrastructure\obj\Debug\net8.0\refint\Bestivale.Infrastructure.dll
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Infrastructure\obj\Debug\net8.0\Bestivale.Infrastructure.pdb
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Infrastructure\obj\Debug\net8.0\ref\Bestivale.Infrastructure.dll
+C:\Users\USER\Documents\Repositories\Bestivale\backend\.tmpbuild\Bestivale.Infrastructure.deps.json
+C:\Users\USER\Documents\Repositories\Bestivale\backend\.tmpbuild\Bestivale.Infrastructure.dll
+C:\Users\USER\Documents\Repositories\Bestivale\backend\.tmpbuild\Bestivale.Infrastructure.pdb

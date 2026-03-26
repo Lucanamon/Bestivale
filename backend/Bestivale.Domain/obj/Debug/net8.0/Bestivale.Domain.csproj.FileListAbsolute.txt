@@ -10,3 +10,6 @@ C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debu
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\refint\Bestivale.Domain.dll
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\Bestivale.Domain.pdb
 C:\Users\USER\Documents\Repositories\Bestivale\backend\Bestivale.Domain\obj\Debug\net8.0\ref\Bestivale.Domain.dll
+C:\Users\USER\Documents\Repositories\Bestivale\backend\.tmpbuild\Bestivale.Domain.deps.json
+C:\Users\USER\Documents\Repositories\Bestivale\backend\.tmpbuild\Bestivale.Domain.dll
+C:\Users\USER\Documents\Repositories\Bestivale\backend\.tmpbuild\Bestivale.Domain.pdb
