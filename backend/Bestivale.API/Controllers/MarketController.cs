@@ -15,9 +15,6 @@ public sealed class MarketController : ControllerBase
         _marketService = marketService;
     }
 
-    private string? GetActingUsername()
-        => Request.Headers["X-Username"].FirstOrDefault();
-
     [HttpGet("listings")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyList<MarketListingDto>>> GetActiveListings(CancellationToken cancellationToken)
@@ -32,10 +29,10 @@ public sealed class MarketController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<MarketListingDto>> CreateEggListing([FromBody] CreateEggListingRequest request, CancellationToken cancellationToken)
     {
-        var acting = GetActingUsername();
+        var acting = this.GetUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Username header.");
+            return this.MissingUsername();
         }
 
         try
@@ -55,10 +52,10 @@ public sealed class MarketController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<MarketListingDto>> CreateInventoryListing([FromBody] CreateInventoryListingRequest request, CancellationToken cancellationToken)
     {
-        var acting = GetActingUsername();
+        var acting = this.GetUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Username header.");
+            return this.MissingUsername();
         }
 
         try
@@ -78,10 +75,10 @@ public sealed class MarketController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<MarketListingDto>> CreateListing([FromBody] CreateMarketListingRequest request, CancellationToken cancellationToken)
     {
-        var acting = GetActingUsername();
+        var acting = this.GetUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Username header.");
+            return this.MissingUsername();
         }
 
         try
@@ -101,10 +98,10 @@ public sealed class MarketController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Buy([FromBody] BuyMarketListingRequest request, CancellationToken cancellationToken)
     {
-        var acting = GetActingUsername();
+        var acting = this.GetUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Username header.");
+            return this.MissingUsername();
         }
 
         try
@@ -128,10 +125,10 @@ public sealed class MarketController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Cancel([FromBody] Guid listingId, CancellationToken cancellationToken)
     {
-        var acting = GetActingUsername();
+        var acting = this.GetUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Username header.");
+            return this.MissingUsername();
         }
 
         try
@@ -155,10 +152,10 @@ public sealed class MarketController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var acting = GetActingUsername();
+        var acting = this.GetUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Username header.");
+            return this.MissingUsername();
         }
 
         try

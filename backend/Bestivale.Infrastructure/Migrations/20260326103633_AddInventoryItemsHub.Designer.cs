@@ -3,6 +3,7 @@ using System;
 using Bestivale.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Bestivale.Infrastructure.Migrations
 {
     [DbContext(typeof(BestivaleDbContext))]
-    partial class BestivaleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260326103633_AddInventoryItemsHub")]
+    partial class AddInventoryItemsHub
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,9 +163,6 @@ namespace Bestivale.Infrastructure.Migrations
                     b.Property<Guid?>("EggId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("InventoryItemId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("MonsterId")
                         .HasColumnType("uuid");
 
@@ -187,8 +187,6 @@ namespace Bestivale.Infrastructure.Migrations
                     b.HasIndex("CreatedAt");
 
                     b.HasIndex("EggId");
-
-                    b.HasIndex("InventoryItemId");
 
                     b.HasIndex("MonsterId");
 
@@ -283,10 +281,10 @@ namespace Bestivale.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("11111111-1111-1111-1111-111111111111"),
-                            CreatedAt = new DateTime(2026, 3, 26, 10, 56, 28, 728, DateTimeKind.Utc).AddTicks(4366),
+                            CreatedAt = new DateTime(2026, 3, 26, 10, 36, 33, 181, DateTimeKind.Utc).AddTicks(2655),
                             CurrencyBalance = 9999,
                             IsRootAdmin = true,
-                            PasswordHash = "$2a$11$V05ed4ZVNbkc3QK70Mdjh.ysKavuvCQZbwmF5qTYZdSLIqujf0/cu",
+                            PasswordHash = "$2a$11$VsALkrxPYU9CnKYlvJ1YlOR0CHoN7BGDlbUH5oGz91PariXY51Ixa",
                             Role = "RootAdmin",
                             Username = "rootadmin"
                         });
@@ -351,11 +349,6 @@ namespace Bestivale.Infrastructure.Migrations
                         .HasForeignKey("EggId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Bestivale.Domain.Entities.InventoryItem", "InventoryItem")
-                        .WithMany()
-                        .HasForeignKey("InventoryItemId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("Bestivale.Domain.Entities.Monster", "Monster")
                         .WithMany()
                         .HasForeignKey("MonsterId")
@@ -369,8 +362,6 @@ namespace Bestivale.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Egg");
-
-                    b.Navigation("InventoryItem");
 
                     b.Navigation("Monster");
 

@@ -14,13 +14,20 @@ public sealed class MarketService : IMarketService
     private readonly IUserRepository _userRepository;
     private readonly IMonsterRepository _monsterRepository;
     private readonly IEggRepository _eggRepository;
+    private readonly IInventoryRepository _inventoryRepository;
 
-    public MarketService(IMarketRepository marketRepository, IUserRepository userRepository, IMonsterRepository monsterRepository, IEggRepository eggRepository)
+    public MarketService(
+        IMarketRepository marketRepository,
+        IUserRepository userRepository,
+        IMonsterRepository monsterRepository,
+        IEggRepository eggRepository,
+        IInventoryRepository inventoryRepository)
     {
         _marketRepository = marketRepository;
         _userRepository = userRepository;
         _monsterRepository = monsterRepository;
         _eggRepository = eggRepository;
+        _inventoryRepository = inventoryRepository;
     }
 
     public async Task<IReadOnlyList<MarketListingDto>> GetActiveListingsAsync(CancellationToken cancellationToken = default)
@@ -84,6 +91,7 @@ public sealed class MarketService : IMarketService
             Id = Guid.NewGuid(),
             MonsterId = monster.Id,
             EggId = egg.Id,
+            InventoryItemId = egg.Id,
             SellerUserId = seller.Id,
             Price = request.Price,
             Status = StatusActive,
@@ -94,9 +102,17 @@ public sealed class MarketService : IMarketService
         egg.IsListed = true;
         await _eggRepository.UpdateAsync(egg, cancellationToken);
 
+        var invItem = await _inventoryRepository.GetItemByIdAsync(egg.Id, cancellationToken);
+        if (invItem is not null)
+        {
+            invItem.IsListed = true;
+            await _inventoryRepository.UpdateItemAsync(invItem, cancellationToken);
+        }
+
         return new MarketListingDto
         {
             Id = listing.Id,
+            InventoryItemId = listing.InventoryItemId,
             MonsterId = monster.Id,
             MonsterName = monster.Name,
             MonsterImageUrl = monster.ImageUrl,
@@ -132,11 +148,16 @@ public sealed class MarketService : IMarketService
             throw new InvalidOperationException("Monster does not exist.");
         }
 
+        // New model: a listing should sell an owned InventoryItem.
+        // For now, mint an InventoryMonster item for the seller at listing time.
+        var monsterItemId = await _inventoryRepository.AddMonsterItemAsync(seller.Id, monster.Id, cancellationToken);
+
         var listing = new MarketListing
         {
             Id = Guid.NewGuid(),
             MonsterId = monster.Id,
             SellerUserId = seller.Id,
+            InventoryItemId = monsterItemId,
             Price = request.Price,
             Status = StatusActive,
             CreatedAt = DateTime.UtcNow
@@ -148,6 +169,7 @@ public sealed class MarketService : IMarketService
         return new MarketListingDto
         {
             Id = listing.Id,
+            InventoryItemId = listing.InventoryItemId,
             MonsterId = monster.Id,
             MonsterName = monster.Name,
             MonsterImageUrl = monster.ImageUrl,
@@ -196,7 +218,19 @@ public sealed class MarketService : IMarketService
         listing.SoldAt = DateTime.UtcNow;
         listing.BuyerUserId = buyer.Id;
 
-        // If this listing represents a specific egg, transfer ownership
+        // Transfer ownership for inventory-backed listings
+        if (listing.InventoryItemId is Guid invId)
+        {
+            var item = await _inventoryRepository.GetItemByIdAsync(invId, cancellationToken);
+            if (item is not null)
+            {
+                item.OwnerUserId = buyer.Id;
+                item.IsListed = false;
+                await _inventoryRepository.UpdateItemAsync(item, cancellationToken);
+            }
+        }
+
+        // Legacy: if listing represents an egg, also transfer legacy record
         if (listing.EggId is Guid eggId)
         {
             var egg = await _eggRepository.GetByIdAsync(eggId, cancellationToken);
@@ -237,7 +271,17 @@ public sealed class MarketService : IMarketService
         listing.Status = StatusCancelled;
         await _marketRepository.UpdateAsync(listing, cancellationToken);
 
-        // Return egg to seller inventory
+        if (listing.InventoryItemId is Guid invId)
+        {
+            var item = await _inventoryRepository.GetItemByIdAsync(invId, cancellationToken);
+            if (item is not null)
+            {
+                item.IsListed = false;
+                await _inventoryRepository.UpdateItemAsync(item, cancellationToken);
+            }
+        }
+
+        // Legacy: return egg to seller inventory
         if (listing.EggId is Guid eggId)
         {
             var egg = await _eggRepository.GetByIdAsync(eggId, cancellationToken);
@@ -255,6 +299,7 @@ public sealed class MarketService : IMarketService
         new()
         {
             Id = l.Id,
+            InventoryItemId = l.InventoryItemId,
             MonsterId = l.MonsterId,
             MonsterName = l.Monster?.Name ?? string.Empty,
             MonsterImageUrl = l.Monster?.ImageUrl ?? string.Empty,

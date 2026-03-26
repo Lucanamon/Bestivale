@@ -15,6 +15,9 @@ public sealed class BestivaleDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<MarketListing> MarketListings => Set<MarketListing>();
     public DbSet<Egg> Eggs => Set<Egg>();
+    public DbSet<InventoryItem> InventoryItems => Set<InventoryItem>();
+    public DbSet<InventoryEgg> InventoryEggs => Set<InventoryEgg>();
+    public DbSet<InventoryMonster> InventoryMonsters => Set<InventoryMonster>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -69,6 +72,7 @@ public sealed class BestivaleDbContext : DbContext
             entity.Property(l => l.CreatedAt).IsRequired();
 
             entity.Property(l => l.EggId);
+            entity.Property(l => l.InventoryItemId);
 
             entity.HasOne(l => l.Monster)
                 .WithMany()
@@ -83,6 +87,11 @@ public sealed class BestivaleDbContext : DbContext
             entity.HasOne(l => l.Egg)
                 .WithMany()
                 .HasForeignKey(l => l.EggId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(l => l.InventoryItem)
+                .WithMany()
+                .HasForeignKey(l => l.InventoryItemId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasIndex(l => l.Status);
@@ -107,6 +116,55 @@ public sealed class BestivaleDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasIndex(e => e.OwnerUserId);
+        });
+
+        modelBuilder.Entity<InventoryItem>(entity =>
+        {
+            entity.HasKey(i => i.Id);
+
+            entity.Property(i => i.ItemType).IsRequired();
+            entity.Property(i => i.IsFavorite).IsRequired().HasDefaultValue(false);
+            entity.Property(i => i.IsListed).IsRequired().HasDefaultValue(false);
+            entity.Property(i => i.CreatedAt).IsRequired();
+
+            entity.HasOne(i => i.OwnerUser)
+                .WithMany()
+                .HasForeignKey(i => i.OwnerUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(i => new { i.OwnerUserId, i.CreatedAt });
+            entity.HasIndex(i => new { i.OwnerUserId, i.IsFavorite });
+            entity.HasIndex(i => new { i.OwnerUserId, i.ItemType });
+        });
+
+        modelBuilder.Entity<InventoryEgg>(entity =>
+        {
+            entity.HasKey(e => e.InventoryItemId);
+
+            entity.Property(e => e.TemplateCode).IsRequired().HasMaxLength(100);
+            entity.Property(e => e.ColorHex).IsRequired().HasMaxLength(16);
+            entity.Property(e => e.ColorDescription).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.CreatedAt).IsRequired();
+
+            entity.HasOne(e => e.InventoryItem)
+                .WithOne(i => i.InventoryEgg)
+                .HasForeignKey<InventoryEgg>(e => e.InventoryItemId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<InventoryMonster>(entity =>
+        {
+            entity.HasKey(m => m.InventoryItemId);
+
+            entity.HasOne(m => m.InventoryItem)
+                .WithOne(i => i.InventoryMonster)
+                .HasForeignKey<InventoryMonster>(m => m.InventoryItemId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(m => m.Monster)
+                .WithMany()
+                .HasForeignKey(m => m.MonsterId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
     }
 }

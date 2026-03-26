@@ -7,15 +7,19 @@ namespace Bestivale.Application.Services;
 public sealed class EggService
 {
     private readonly IEggRepository _eggRepository;
+    private readonly IInventoryRepository _inventoryRepository;
     private readonly IUserRepository _userRepository;
-    private readonly IMarketRepository _marketRepository;
     private readonly Random _rng = new();
 
-    public EggService(IEggRepository eggRepository, IUserRepository userRepository, IMarketRepository marketRepository)
+    public EggService(
+        IEggRepository eggRepository,
+        IInventoryRepository inventoryRepository,
+        IUserRepository userRepository,
+        IMarketRepository marketRepository)
     {
         _eggRepository = eggRepository;
+        _inventoryRepository = inventoryRepository;
         _userRepository = userRepository;
-        _marketRepository = marketRepository;
     }
 
     public async Task EnsureAtLeastEggsForAllUsersAsync(int minEggs, CancellationToken cancellationToken = default)
@@ -32,6 +36,12 @@ public sealed class EggService
             var missing = minEggs - count;
             var eggs = Enumerable.Range(0, missing).Select(_ => CreateRandomEgg(user.Id)).ToList();
             await _eggRepository.AddRangeAsync(eggs, cancellationToken);
+
+            // Dual-write: keep InventoryItems/InventoryEggs in sync for newly created eggs.
+            foreach (var egg in eggs)
+            {
+                await _inventoryRepository.UpsertEggItemFromLegacyEggAsync(egg, cancellationToken);
+            }
         }
     }
 
@@ -73,6 +83,7 @@ public sealed class EggService
 
         var egg = CreateRandomEgg(user.Id);
         await _eggRepository.AddRangeAsync(new[] { egg }, cancellationToken);
+        await _inventoryRepository.UpsertEggItemFromLegacyEggAsync(egg, cancellationToken);
 
         return new EggDto
         {

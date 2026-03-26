@@ -19,6 +19,7 @@ public sealed class MarketRepository : IMarketRepository
         return await _db.MarketListings
             .AsNoTracking()
             .Include(l => l.Monster)
+            .Include(l => l.InventoryItem)
             .Include(l => l.SellerUser)
             .Where(l => l.Status == "Active")
             .OrderBy(l => l.Price)

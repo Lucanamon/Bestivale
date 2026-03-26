@@ -15,8 +15,6 @@ public sealed class FateController : ControllerBase
         _eggService = eggService;
     }
 
-    private string? GetUsername() => Request.Headers["X-Username"].FirstOrDefault();
-
     public sealed class DrawRequest
     {
         public int Tier { get; init; }
@@ -28,10 +26,10 @@ public sealed class FateController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<EggDto>> Draw([FromBody] DrawRequest request, CancellationToken cancellationToken)
     {
-        var username = GetUsername();
+        var username = this.GetUsername();
         if (string.IsNullOrWhiteSpace(username))
         {
-            return Unauthorized("Missing X-Username header.");
+            return this.MissingUsername();
         }
 
         try

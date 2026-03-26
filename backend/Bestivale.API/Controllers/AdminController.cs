@@ -1,5 +1,6 @@
 using Bestivale.Application.Dtos;
 using Bestivale.Application.Interfaces;
+using Bestivale.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bestivale.API.Controllers;
@@ -9,26 +10,25 @@ namespace Bestivale.API.Controllers;
 public sealed class AdminController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly AdminInventoryService _adminInventoryService;
 
-    public AdminController(IUserService userService)
+    public AdminController(IUserService userService, AdminInventoryService adminInventoryService)
     {
         _userService = userService;
+        _adminInventoryService = adminInventoryService;
     }
 
     // For now, the acting admin username is taken from the X-Admin-Username header.
     // This should be wired to the authenticated user identity in a real system.
-    private string? GetActingAdminUsername()
-        => Request.Headers["X-Admin-Username"].FirstOrDefault();
-
     [HttpGet("users")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<IReadOnlyList<UserResponse>>> GetAllUsers(CancellationToken cancellationToken)
     {
-        var acting = GetActingAdminUsername();
+        var acting = this.GetAdminUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Admin-Username header.");
+            return this.MissingAdminUsername();
         }
 
         // Authorization is enforced inside the service based on role.
@@ -49,10 +49,10 @@ public sealed class AdminController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Promote(Guid userId, CancellationToken cancellationToken)
     {
-        var acting = GetActingAdminUsername();
+        var acting = this.GetAdminUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Admin-Username header.");
+            return this.MissingAdminUsername();
         }
 
         try
@@ -77,10 +77,10 @@ public sealed class AdminController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Demote(Guid userId, CancellationToken cancellationToken)
     {
-        var acting = GetActingAdminUsername();
+        var acting = this.GetAdminUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Admin-Username header.");
+            return this.MissingAdminUsername();
         }
 
         try
@@ -105,10 +105,10 @@ public sealed class AdminController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> Delete(Guid userId, CancellationToken cancellationToken)
     {
-        var acting = GetActingAdminUsername();
+        var acting = this.GetAdminUsername();
         if (string.IsNullOrWhiteSpace(acting))
         {
-            return Unauthorized("Missing X-Admin-Username header.");
+            return this.MissingAdminUsername();
         }
 
         try
@@ -120,6 +120,33 @@ public sealed class AdminController : ControllerBase
             }
 
             return NoContent();
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+    }
+
+    [HttpPost("grant/monster")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> GrantMonster([FromBody] GrantMonsterRequest request, CancellationToken cancellationToken)
+    {
+        var acting = this.GetAdminUsername();
+        if (string.IsNullOrWhiteSpace(acting))
+        {
+            return this.MissingAdminUsername();
+        }
+
+        try
+        {
+            await _adminInventoryService.GrantMonsterAsync(acting, request, cancellationToken);
+            return NoContent();
+        }
+        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException)
+        {
+            return BadRequest(ex.Message);
         }
         catch (UnauthorizedAccessException ex)
         {

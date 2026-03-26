@@ -59,8 +59,10 @@ builder.Services.AddScoped<IUserService, AuthService>();
 builder.Services.AddScoped<IMarketRepository, MarketRepository>();
 builder.Services.AddScoped<IMarketService, MarketService>();
 builder.Services.AddScoped<IEggRepository, EggRepository>();
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
 builder.Services.AddScoped<EggService>();
 builder.Services.AddScoped<InventoryService>();
+builder.Services.AddScoped<AdminInventoryService>();
 
 var app = builder.Build();
 

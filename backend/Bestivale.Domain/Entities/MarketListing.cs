@@ -4,6 +4,12 @@ public sealed class MarketListing
 {
     public Guid Id { get; set; }
 
+    // New polymorphic link: listing sells an owned InventoryItem (egg or monster).
+    // During transition this may be null for legacy listings.
+    public Guid? InventoryItemId { get; set; }
+
+    public InventoryItem? InventoryItem { get; set; }
+
     public Guid MonsterId { get; set; }
 
     public Monster? Monster { get; set; }
